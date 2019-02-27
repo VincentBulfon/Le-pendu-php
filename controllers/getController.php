@@ -31,6 +31,12 @@ $lettersArray = [
 
 
 $wordsArray = getWordsArray();
-$word = getWord(getRandomIndex($wordsArray), $wordsArray);
+$wordIndex = getRandomIndex($wordsArray);
+$word = getWord($wordIndex, $wordsArray);
 $numberOfLetters = getNumberOfLetters($word);
 $blurredWord = blurringWord(BLURREDCHARACTER,$numberOfLetters);
+$remainningTrials = MAX_TRIALS;
+$trials = 0;
+$triedLetters='';
+$gameOver = false;
+$gameWon = false;
