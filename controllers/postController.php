@@ -1,42 +1,30 @@
 <?php
 $gameOver = false;
 $gameWon = false;
-if(isset($_COOKIE['gameData'])){
-    $gameData = decode($_COOKIE['gameData']);
-    extract($gameData);
-}else{
-    die('Apparemment, vous essayer d‘accéder à cette page par un moyen non prévu!');
-}
 
 $triedLetter = $_POST['triedLetter'];// c'est la seule valeur à recupérer du post car on la transmet via le form
-$triedLetters = $triedLetters;
-$triedLetters .= $triedLetter;
-$lettersArray[$triedLetter] = false;//on parcours le tableau (tableau associatif) et on cherche la lettre correspondant triedLetter puis on affecte sa valeur à false;
+$_SESSION['triedLetters'] .= $triedLetter;
+$_SESSION['lettersArray'][$triedLetter] = false;//on parcours le tableau (tableau associatif) et on cherche la lettre correspondant triedLetter puis on affecte sa valeur à false;
 
-$wordsArray = getWordsArray();
-$word = strtolower(getWord($wordIndex, $wordsArray));
-$numberOfLetters = $numberOfLetters;
-$blurredWord = $blurredWord;
+
 $letterFound = false;
-$trials = $trials;
 
-for ($i = 0; $i < $numberOfLetters; $i++) {
-    $letter = substr($word, $i, 1);
-    if ($letter === $triedLetter) {
+
+for ($i = 0; $i < $_SESSION['numberOfLetters']; $i++) {
+    $letter = substr($_SESSION['word'], $i, 1);
+    if (strtolower($letter) === $triedLetter) {
         $letterFound = true;
-        $blurredWord = substr_replace($blurredWord, $triedLetter, $i, 1);
+        $_SESSION['blurredWord'] = substr_replace($_SESSION['blurredWord'], $triedLetter, $i, 1);
     }
 }
 if ($letterFound == false) {
-    $trials++;
+    $_SESSION['trials']++;
 }
 
-$remainningTrials = MAX_TRIALS - $trials;
+$remainningTrials = MAX_TRIALS - $_SESSION['trials'];
 
 if ($remainningTrials <= 0) {
     $gameOver = true;
-} elseif ($blurredWord === $word) {
+} elseif (strtolower($_SESSION['blurredWord']) === strtolower($_SESSION['word'])) {
     $gameWon = true;
 }
-
-setcookie('gameData', encode(compact('wordIndex', 'lettersArray', 'numberOfLetters', 'triedLetters', 'blurredWord', 'trials')));

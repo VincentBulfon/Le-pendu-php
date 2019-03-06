@@ -8,7 +8,7 @@
         </label>
         <select name="triedLetter" id="triedLetter">
 
-            <?php foreach ($lettersArray as $letter => $status): ?>
+            <?php foreach ($_SESSION['lettersArray'] as $letter => $status): ?>
 
                 <?php if ($status): ?>
 

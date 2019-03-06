@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 include 'configs/config.php';
 include 'models/model.php';
 include 'controllers/controller.php';

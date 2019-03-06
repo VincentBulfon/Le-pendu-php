@@ -1,6 +1,6 @@
 <?php
 
-$lettersArray = [
+$_SESSION['lettersArray'] = [
     'a' => true,
     'b' => true,
     'c' => true,
@@ -29,15 +29,15 @@ $lettersArray = [
     'z' => true,
 ];
 
-
-$wordsArray = getWordsArray();
-$wordIndex = getRandomIndex($wordsArray);
-$word = getWord($wordIndex, $wordsArray);
-$numberOfLetters = getNumberOfLetters($word);
-$blurredWord = blurringWord(BLURREDCHARACTER, $numberOfLetters);
+if (!isset($_SESSION['wordsArray'])) {
+    setWordsArray();
+}
+$wordIndex = getRandomIndex($_SESSION['wordsArray']);
+$_SESSION['word'] = getWord($wordIndex, $_SESSION['wordsArray']);
+$_SESSION['numberOfLetters'] = getNumberOfLetters($_SESSION['word']);
+$_SESSION['blurredWord'] = blurringWord(BLURREDCHARACTER, $_SESSION['numberOfLetters']);
 $remainningTrials = MAX_TRIALS;
-$trials = 0;
-$triedLetters = '';
+$_SESSION['trials'] = 0;
+$_SESSION['triedLetters'] = '';
 $gameOver = false;
 $gameWon = false;
-setcookie('gameData', encode(compact('wordIndex', 'lettersArray', 'numberOfLetters', 'triedLetters', 'blurredWord', 'trials')));
