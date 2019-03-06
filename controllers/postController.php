@@ -1,18 +1,24 @@
 <?php
 $gameOver = false;
 $gameWon = false;
-$lettersArray = unserialize(urldecode($_POST['lettersArray']));
-$triedLetter = $_POST['triedLetter'];
-$triedLetters = $_POST['triedLetters'];
+if(isset($_COOKIE['gameData'])){
+    $gameData = decode($_COOKIE['gameData']);
+    extract($gameData);
+}else{
+    die('Apparemment, vous essayer d‘accéder à cette page par un moyen non prévu!');
+}
+
+$triedLetter = $_POST['triedLetter'];// c'est la seule valeur à recupérer du post car on la transmet via le form
+$triedLetters = $triedLetters;
 $triedLetters .= $triedLetter;
 $lettersArray[$triedLetter] = false;//on parcours le tableau (tableau associatif) et on cherche la lettre correspondant triedLetter puis on affecte sa valeur à false;
-$wordIndex = $_POST['wordIndex'];
+
 $wordsArray = getWordsArray();
 $word = strtolower(getWord($wordIndex, $wordsArray));
-$numberOfLetters = $_POST['numberOfLetters'];
-$blurredWord = $_POST['blurredWord'];
+$numberOfLetters = $numberOfLetters;
+$blurredWord = $blurredWord;
 $letterFound = false;
-$trials = $_POST['trials'];
+$trials = $trials;
 
 for ($i = 0; $i < $numberOfLetters; $i++) {
     $letter = substr($word, $i, 1);
@@ -21,14 +27,16 @@ for ($i = 0; $i < $numberOfLetters; $i++) {
         $blurredWord = substr_replace($blurredWord, $triedLetter, $i, 1);
     }
 }
-if($letterFound == false){
-    $trials ++;
+if ($letterFound == false) {
+    $trials++;
 }
 
 $remainningTrials = MAX_TRIALS - $trials;
 
-if ($remainningTrials <= 0){
+if ($remainningTrials <= 0) {
     $gameOver = true;
-}elseif ($blurredWord === $word){
+} elseif ($blurredWord === $word) {
     $gameWon = true;
 }
+
+setcookie('gameData', encode(compact('wordIndex', 'lettersArray', 'numberOfLetters', 'triedLetters', 'blurredWord', 'trials')));

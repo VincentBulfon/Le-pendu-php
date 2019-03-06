@@ -7,5 +7,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 } else {
     die('Vous n‘avez rien à faire ici');
 }
-
-$serializedLetterArray = urlencode(serialize($lettersArray)); //le tableau est encodé est transmit quoi qu'il se passe, même dès la première visite Cela créer un array sérializé
+//le tableau est encodé est transmit quoi qu'il se passe, même dès la première visite Cela créer un array sérializé

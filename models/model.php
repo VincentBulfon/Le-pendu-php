@@ -23,3 +23,11 @@ function blurringWord($blurredCharacter,$nbrLetters){
         // ou utiliser str_pad('', $nbrLetters, REPLACEMENT_CHAR)
     }
 }
+
+function encode($value){
+    return urlencode(serialize($value));
+}
+
+function decode($value){
+    return unserialize(urldecode($value));
+}

@@ -24,11 +24,5 @@
 
         </select>
         <input type="submit" value="envoyer">
-        <input type="hidden" name="lettersArray" value="<?= $serializedLetterArray ?>" >
-        <input type="hidden" name="wordIndex" value="<?= $wordIndex ?>" >
-        <input type="hidden" name="numberOfLetters" value="<?= $numberOfLetters ?>">
-        <input type="hidden" name="blurredWord" value="<?= $blurredWord?>">
-        <input type="hidden" name="triedLetters" value="<?= $triedLetters?>">
-        <input type="hidden" name="trials" value="<?= $trials ?>">
     </fieldset>
 </form>
